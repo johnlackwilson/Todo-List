@@ -16,7 +16,7 @@ class DBConnector {
 
     private static final String TABLE_NAME = "app";
     private static final String DATA_DIR = ".data";
-    private String DB_URL = null;
+    private String DB_URL;
 
     DBConnector() {
         this.DB_URL = "jdbc:sqlite:" + FileSystems.getDefault().getPath(".").toAbsolutePath().toString() + "/" + DATA_DIR + "/" + TABLE_NAME + ".db";
@@ -136,6 +136,14 @@ class DBConnector {
             }
         } catch(SQLException e) {
             System.err.println("[ERROR] " + e.getMessage());
+        } finally {
+            try {
+                if(conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
         }
     }
 }
