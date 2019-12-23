@@ -6,12 +6,21 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class to connect and interface with the database of the app.
+ *
+ * @author John Lack-Wilson
+ */
 class DBConnector {
 
     private static final String TABLE_NAME = "app";
     private static final String DATA_DIR = ".data";
     private static final String DB_URL = "jdbc:sqlite:/home/john.lack/Development/Todo/" + DATA_DIR + "/" + TABLE_NAME + ".db";
 
+    /**
+     * <p>Connects to the database.</p>
+     * @return the open connection or null.
+     */
     private Connection connect() {
         Connection conn = null;
         try {
@@ -23,6 +32,10 @@ class DBConnector {
         return conn;
     }
 
+    /**
+     * <p>Returns all items in the app's database.</p>
+     * @return ArrayList of all items in the database.
+     */
     List<Todo> getAll() {
         Connection conn = null;
         List<Todo> todoItems = new ArrayList<>();
@@ -65,6 +78,10 @@ class DBConnector {
         return todoItems;
     }
 
+    /**
+     * <p>Adds an item to the database.</p>
+     * @param title of the item to add.
+     */
     void add(String title) {
         Connection conn = null;
         try {
@@ -93,6 +110,10 @@ class DBConnector {
         }
     }
 
+    /**
+     * <p>Deletes an item from the database with a particular ID.</p>
+     * @param itemNumber the ID of the item.
+     */
     void delete(int itemNumber) {
         Connection conn = null;
         try {

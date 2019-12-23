@@ -5,18 +5,36 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * The main app class to interact as the CLI with the user.
+ */
 public class App {
 
     private static final String COMMAND_NOT_RECOGNISED_ERR = "Command not recognised.";
 
+    /**
+     * The Scanner to ask for user input.
+     */
     private Scanner input;
+
+    /**
+     * The connector to interface with the apps' database.
+     */
     private DBConnector connector;
 
+    /**
+     * <p>Constructor.</p>
+     */
     private App() {
         this.input = new Scanner(System.in);
         this.connector = new DBConnector();
     }
 
+    /**
+     * <p>Checks if the Menu contains a particular choice.</p>
+     * @param choice the Menu selection.
+     * @return true if the choice is in the Menu enum, false otherwise.
+     */
     private boolean menuContains(String choice) {
         for(Menu m: Menu.values()) {
             if(m.getMenuItemName().equals(choice)) {
@@ -26,10 +44,17 @@ public class App {
         return false;
     }
 
+    /**
+     * <p>Prints the menu to the console.</p>
+     */
     private void printMenu() {
         Arrays.asList(Menu.values()).forEach(item -> System.out.println("[" + item.getMenuItemName() + "]: " + item.getMenuItemDesc()));
     }
 
+    /**
+     * <p>Handles input from the user.</p>
+     * @throws IllegalArgumentException if user inputs an invalid command.
+     */
     private void menuHandler() throws IllegalArgumentException {
         String choice = this.input.next();
 
