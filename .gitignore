@@ -1,0 +1,9 @@
+# IDE
+.idea
+*.iml
+
+# DB
+.app
+
+# Output
+out
