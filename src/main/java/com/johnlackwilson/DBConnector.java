@@ -8,7 +8,9 @@ import java.util.List;
 
 class DBConnector {
 
-    private static final String DB_URL = "jdbc:sqlite:/home/john.lack/Development/Todo/.app/todo.db";  // TODO: Make dynamic
+    private static final String TABLE_NAME = "app";
+    private static final String DATA_DIR = ".data";
+    private static final String DB_URL = "jdbc:sqlite:/home/john.lack/Development/Todo/" + DATA_DIR + "/" + TABLE_NAME + ".db";
 
     private Connection connect() {
         Connection conn = null;
@@ -28,7 +30,7 @@ class DBConnector {
         try {
             conn = this.connect();
             Statement stmt = conn.createStatement();
-            ResultSet resultSet = stmt.executeQuery("select * from todo");
+            ResultSet resultSet = stmt.executeQuery("select * from " + TABLE_NAME);
             while(resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String title = resultSet.getString("title");
@@ -67,8 +69,9 @@ class DBConnector {
         Connection conn = null;
         try {
             conn = this.connect();
-            PreparedStatement prepStmt = conn.prepareStatement("insert into todo(title) values (?)");
-            prepStmt.setString(1, title);
+            PreparedStatement prepStmt = conn.prepareStatement("insert into ?(title) values (?)");
+            prepStmt.setString(1, TABLE_NAME);
+            prepStmt.setString(2, title);
 
             // Check it works - 0 on failure.
             int success = prepStmt.executeUpdate();
@@ -94,8 +97,9 @@ class DBConnector {
         Connection conn = null;
         try {
             conn = this.connect();
-            PreparedStatement prepStmt = conn.prepareStatement("delete from todo where id=?");
-            prepStmt.setInt(1, itemNumber);
+            PreparedStatement prepStmt = conn.prepareStatement("delete from ? where id=?");
+            prepStmt.setString(1, TABLE_NAME);
+            prepStmt.setInt(2, itemNumber);
 
             // Check it works - 0 on failure.
             int success = prepStmt.executeUpdate();
