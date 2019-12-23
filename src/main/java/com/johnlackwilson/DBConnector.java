@@ -1,5 +1,6 @@
 package main.java.com.johnlackwilson;
 
+import java.nio.file.FileSystems;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -15,7 +16,11 @@ class DBConnector {
 
     private static final String TABLE_NAME = "app";
     private static final String DATA_DIR = ".data";
-    private static final String DB_URL = "jdbc:sqlite:/home/john.lack/Development/Todo/" + DATA_DIR + "/" + TABLE_NAME + ".db";
+    private String DB_URL = null;
+
+    DBConnector() {
+        this.DB_URL = "jdbc:sqlite:" + FileSystems.getDefault().getPath(".").toAbsolutePath().toString() + "/" + DATA_DIR + "/" + TABLE_NAME + ".db";
+    }
 
     /**
      * <p>Connects to the database.</p>
@@ -86,9 +91,9 @@ class DBConnector {
         Connection conn = null;
         try {
             conn = this.connect();
-            PreparedStatement prepStmt = conn.prepareStatement("insert into ?(title) values (?)");
-            prepStmt.setString(1, TABLE_NAME);
-            prepStmt.setString(2, title);
+            String sql = "insert into " + TABLE_NAME + " (title) values (?)";
+            PreparedStatement prepStmt = conn.prepareStatement(sql);
+            prepStmt.setString(1, title);
 
             // Check it works - 0 on failure.
             int success = prepStmt.executeUpdate();
@@ -105,7 +110,7 @@ class DBConnector {
                     conn.close();
                 }
             } catch (SQLException e) {
-                System.err.println("[ERROR] " + e.getMessage());
+                System.err.println(e.getMessage());
             }
         }
     }
@@ -118,9 +123,9 @@ class DBConnector {
         Connection conn = null;
         try {
             conn = this.connect();
-            PreparedStatement prepStmt = conn.prepareStatement("delete from ? where id=?");
-            prepStmt.setString(1, TABLE_NAME);
-            prepStmt.setInt(2, itemNumber);
+            String sql = "delete from " + TABLE_NAME + " where id=?";
+            PreparedStatement prepStmt = conn.prepareStatement(sql);
+            prepStmt.setInt(1, itemNumber);
 
             // Check it works - 0 on failure.
             int success = prepStmt.executeUpdate();
