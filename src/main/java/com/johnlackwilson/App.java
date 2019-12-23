@@ -53,12 +53,11 @@ public class App {
         } else if(choice.equals(Menu.LIST.getMenuItemName())) {
             List<Todo> todoItems = this.connector.getAll();
             for(Todo item: todoItems) {
-                System.out.println(String.format("[%d]: %s\n", item.getId(), item.getTitle()));
+                System.out.println(String.format("[%d]: %s", item.getId(), item.getTitle()));
             }
         } else if(choice.equals(Menu.ADD.getMenuItemName())) {
-            // Now we need to parse any further args for the title of the item
             System.out.print("[TITLE] ");
-            this.connector.add(input.nextLine());
+            this.connector.add(input.nextLine().trim());
         } else if(choice.equals(Menu.DEL.getMenuItemName())) {
             System.out.print("[ITEM NUMBER] ");
             try {
