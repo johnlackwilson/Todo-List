@@ -3,7 +3,7 @@
 *.iml
 
 # DB
-.app
+.data
 
 # Output
 out
