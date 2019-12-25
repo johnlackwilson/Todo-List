@@ -38,6 +38,25 @@ class DBConnector {
     }
 
     /**
+     * <p>Checks whether the database is accessible or not.</p>
+     * @return true if the DB is accessible, false otherwise.
+     */
+    public boolean isAccessible() {
+        boolean accessible = false;
+        Connection conn = connect();
+
+        try {
+            if(conn != null) {
+                accessible = true;
+                conn.close();
+            }
+        } catch (SQLException e) {
+            // Do nothing.
+        }
+        return accessible;
+    }
+
+    /**
      * <p>Returns all items in the app's database.</p>
      * @return ArrayList of all items in the database.
      */

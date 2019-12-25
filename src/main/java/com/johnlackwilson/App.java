@@ -178,9 +178,18 @@ public class App {
         // HELP
         if(command.equals(Menu.HELP.getMenuItemName())) {
             help();
+            return;
         }
+
+        // Make sure we can connect to the db.
+        if(!connector.isAccessible()) {
+            clearScreen();
+            System.err.println("Sorry! Database is not accessible. Has the install script been ran?");
+            System.exit(-1);
+        }
+
         // LIST
-        else if(command.equals(Menu.LIST.getMenuItemName())) {
+        if(command.equals(Menu.LIST.getMenuItemName())) {
             list();
         }
         // ADD
