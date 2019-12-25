@@ -41,9 +41,9 @@ class DBConnector {
      * <p>Returns all items in the app's database.</p>
      * @return ArrayList of all items in the database.
      */
-    List<Todo> getAll() {
+    List<TodoItem> getAll() {
         Connection conn = null;
-        List<Todo> todoItems = new ArrayList<>();
+        List<TodoItem> todoItems = new ArrayList<>();
 
         try {
             conn = this.connect();
@@ -66,7 +66,7 @@ class DBConnector {
                     dateDue = LocalDateTime.parse(dateDueString, formatter);
                 }
 
-                todoItems.add(new Todo(id, title, complete, dateAdded, dateDue));
+                todoItems.add(new TodoItem(id, title, complete, dateAdded, dateDue));
             }
         } catch(SQLException e) {
             System.err.println(e.getMessage());
