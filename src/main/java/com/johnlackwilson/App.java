@@ -86,10 +86,17 @@ public class App {
      * <p>Prints all items.</p>
      */
     private void list() {
-        clearScreen();
         List<TodoItem> todoItems = this.connector.getAll();
-        for(TodoItem item: todoItems) {
-            System.out.printf("%-4s %s\n", ("[" + item.getId() + "]"), item.getTitle());
+
+        // Print message to say there's no items found
+        if(todoItems.isEmpty()) {
+            System.out.println("No items found. Add your first todo item with the 'add' command.");
+        }
+        // If there are items in the db then print them.
+        else {
+            for (TodoItem item : todoItems) {
+                System.out.printf("%-4s %s\n", ("[" + item.getId() + "]"), item.getTitle());
+            }
         }
     }
 
@@ -97,7 +104,6 @@ public class App {
      * <p></p>
      */
     private void add(List<String> args) {
-        clearScreen();
         String title = null;
 
         // If the list is empty then ask the user for their title.
@@ -120,7 +126,6 @@ public class App {
      * <p></p>
      */
     private void delete(List<String> args) {
-        clearScreen();
         String itemNumString;
 
         // If user supplied args then assume the first is the number of the item to delete.
