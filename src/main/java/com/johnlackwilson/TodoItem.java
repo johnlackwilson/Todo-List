@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 /**
  * Class to represent a Todo item.
  */
-public class Todo {
+public class TodoItem {
 
     /**
      * The ID of the item.
@@ -40,7 +40,7 @@ public class Todo {
      * @param dateAdded the database datetime when the item was added.
      * @param dateDue the database datetime when the item is due.
      */
-    public Todo(int id, String title, boolean complete, LocalDateTime dateAdded, LocalDateTime dateDue) {
+    public TodoItem(int id, String title, boolean complete, LocalDateTime dateAdded, LocalDateTime dateDue) {
         this.id = id;
         this.title = title;
         this.complete = complete;
